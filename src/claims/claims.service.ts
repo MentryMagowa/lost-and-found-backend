@@ -13,14 +13,20 @@ export class ClaimsService {
 
   // Create a new claim
   async create(createClaimDto: CreateClaimDto): Promise<Claim> {
-    const newClaim = this.claimsRepository.create(createClaimDto);
-    return await this.claimsRepository.save(newClaim);
+const newClaim = this.claimsRepository.create({
+  userId: createClaimDto.userId,
+  foundItemId: createClaimDto.foundItemId,
+  verificationNote: createClaimDto.verificationNote,
+  status: 'pending'
+});
+return await this.claimsRepository.save(newClaim);
+
   }
 
   // Get all claims (for Admin to review)
   async findAll(): Promise<Claim[]> {
     return await this.claimsRepository.find({
-      relations: ['user', 'foundItem'], // This pulls the related data from other tables
+    // relations: ['user', 'foundItem'], // This pulls the related data from other tables
     });
   }
 

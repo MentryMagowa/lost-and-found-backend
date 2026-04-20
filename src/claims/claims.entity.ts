@@ -1,22 +1,22 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 
-@Entity('claims')
+@Entity({ name: 'CLAIMS' }) 
 export class Claim {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'ID' })
   id!: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'CLAIM_DATE' })
   claimDate!: Date;
 
-  @Column({ default: 'pending' })
-  status!: string; // e.g., 'pending', 'approved', 'rejected'
+  @Column({ name: 'STATUS', default: 'pending' })
+  status!: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'VERIFICATION_NOTE', nullable: true })
   verificationNote!: string;
 
-  @Column()
-  userId!: number; // Placeholder until Person 2 creates their entity
+  @Column({ name: 'USER_ID' })
+  userId!: number;
 
-  @Column()
-  foundItemId!: number; // Placeholder until Person 4 creates their entity
+  @Column({ name: 'FOUND_ITEM_ID' })
+  foundItemId!: number;
 }

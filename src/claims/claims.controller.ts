@@ -7,7 +7,7 @@ export class ClaimsController {
   constructor(private readonly claimsService: ClaimsService) {}
 
   @Post()
-  create(@Body() createClaimDto: CreateClaimDto) {
+  async create(@Body() createClaimDto: CreateClaimDto) {
     return this.claimsService.create(createClaimDto);
   }
 
@@ -18,6 +18,6 @@ export class ClaimsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.claimsService.findOne(+id); // The + converts the string ID to a number
+    return this.claimsService.findOne(+id); 
   }
 }
