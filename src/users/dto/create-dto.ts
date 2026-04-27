@@ -1,14 +1,15 @@
-import { IsString, IsEmail, IsInt, IsOptional } from 'class-validator';
+import { IsString, IsEmail, IsOptional, Matches } from 'class-validator';
 
 export class CreateUserDto {
-    
     @IsString()
     name: string;
 
     @IsEmail()
+    @Matches(/@unima\.ac\.mw$/, { message: 'Email must be from @unima.ac.mw domain' })
     email: string;
-    @IsString
-    role:string;
+
+    @IsString()
+    role: string;
 }
 
 export class UpdateUserDto {
@@ -18,7 +19,6 @@ export class UpdateUserDto {
 
     @IsEmail()
     @IsOptional()
+    @Matches(/@unima\.ac\.mw$/, { message: 'Email must be from @unima.ac.mw domain' })
     email?: string;
-
-    
 }
