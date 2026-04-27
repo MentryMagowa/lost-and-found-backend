@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
-import { FoundItemsService } from './found-items.service';
-import { FoundItemsController } from './found-items.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { FoundItemService } from './found-items.service';
+import { FoundItemController } from './found-items.controller';
+import { FoundItem } from './entities/found-item.entity';
 
 @Module({
-  providers: [FoundItemsService],
-  controllers: [FoundItemsController]
+  imports: [TypeOrmModule.forFeature([FoundItem])],
+  controllers: [FoundItemController],
+  providers: [FoundItemService],
+  exports: [FoundItemService],
 })
-export class FoundItemsModule {}
+export class FoundItemModule {}
