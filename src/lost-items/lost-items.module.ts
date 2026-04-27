@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+//import { LostItem } from './lost-item.entity';
 import { LostItemsService } from './lost-items.service';
 import { LostItemsController } from './lost-items.controller';
 
 @Module({
+  //imports: [TypeOrmModule.forFeature([LostItem])],
+  controllers: [LostItemsController],
   providers: [LostItemsService],
-  controllers: [LostItemsController]
+  exports: [LostItemsService],
 })
 export class LostItemsModule {}
