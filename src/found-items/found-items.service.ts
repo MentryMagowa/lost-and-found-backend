@@ -6,7 +6,7 @@ import { CreateFoundItemDto } from './dto/create-found-item.dto';
 import { UpdateFoundItemDto } from './dto/update-found-item.dto';
 
 @Injectable()
-export class FoundItemService {
+export class FoundItemsService {
   constructor(
     @InjectRepository(FoundItem)
     private foundItemRepository: Repository<FoundItem>,

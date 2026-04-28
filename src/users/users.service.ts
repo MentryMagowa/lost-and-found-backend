@@ -1,63 +1,48 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto } from './dto/create-dto';
-
-// Define the shape of your User object
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-    role: string;
-}
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './entities/user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
-    // Fix: Explicitly type the array as User[] instead of letting it be 'never[]'
-    private users: User[] = [];
+  constructor(
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+  ) {}
 
-  create(createUserDto: CreateUserDto) {
-    const newUser: User = {
-        id: Date.now(),
-        ...createUserDto
-    };
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const user = this.usersRepository.create(createUserDto);
+    return await this.usersRepository.save(user);
+  }
 
-    this.users.push(newUser);
+  async findAll(): Promise<User[]> {
+    return await this.usersRepository.find();
+  }
+
+  async findOne(id: number): Promise<User> {
+    const user = await this.usersRepository.findOne({ where: { id } });
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    return user;
+  }
+
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+    await this.findOne(id);
+    await this.usersRepository.update(id, updateUserDto);
+    return await this.findOne(id);
+  }
+
+  async remove(id: number): Promise<{ message: string }> {
+    await this.findOne(id);
+    await this.usersRepository.delete(id);
 
     return {
-        message: 'User created',
-        user: newUser
+      message: `User ${id} deleted successfully`,
     };
-}
-
-    findAll(): User[] {
-        return this.users;
-    }
-
-    // To fix the "Unused method" errors, ensure these are called in your Controller!
-    findOne(id: number): User {
-        const user = this.users.find(u => u.id === id);
-        if (!user) throw new NotFoundException(`User with ID ${id} not found`);
-        return user;
-    }
-
-    update(id: number, updateUserDto: UpdateUserDto): User {
-        const userIndex = this.users.findIndex(u => u.id === id);
-        if (userIndex === -1) throw new NotFoundException(`User with ID ${id} not found`);
-
-        this.users[userIndex] = { ...this.users[userIndex], ...updateUserDto };
-        return this.users[userIndex];
-    }
-
-    remove(id: number) {
-    const userIndex = this.users.findIndex(u => u.id === id);
-    if (userIndex === -1) {
-        throw new NotFoundException(`User with ID ${id} not found`);
-    }
-
-    const deletedUser = this.users.splice(userIndex, 1)[0];
-
-    return {
-        message: 'User deleted',
-        user: deletedUser
-    };
-}
+  }
 }

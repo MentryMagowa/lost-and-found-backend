@@ -1,39 +1,33 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { User } from '../users/user.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+} from 'typeorm';
 
 @Entity('lost_items')
 export class LostItem {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 100 })
+  @Column()
   itemName: string;
 
-  @Column('text')
+  @Column()
   description: string;
 
-  @Column({ length: 200 })
+  @Column()
   location: string;
 
-  @Column('date')
-  dateLost: Date;
+  @Column()
+  dateLost: string;
 
-  @Column({ length: 50 })
-  category: string;
-
-  @Column({ type: 'enum', enum: ['lost', 'recovered'], default: 'lost' })
+  @Column({ default: 'pending' })
   status: string;
 
-  @Column()
-  reportedById: number;
-
-  @ManyToOne(() => User, (user) => user.lostItems, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'reportedById' })
-  reportedBy: User;
+  @Column({ nullable: true })
+  reportedBy: string;
 
   @CreateDateColumn()
   createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

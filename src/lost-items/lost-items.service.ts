@@ -18,13 +18,12 @@ export class LostItemsService {
   }
 
   async findAll(): Promise<LostItem[]> {
-    return this.lostItemsRepository.find({ relations: ['reportedBy'] });
+    return this.lostItemsRepository.find();
   }
 
   async findOne(id: number): Promise<LostItem> {
     const item = await this.lostItemsRepository.findOne({
       where: { id },
-      relations: ['reportedBy'],
     });
     if (!item) throw new NotFoundException(`Lost item #${id} not found`);
     return item;
