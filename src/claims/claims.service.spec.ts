@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { ClaimsService } from './claims.service';
-import { Claim } from './claims.entity';
+import { Claim } from './entities/claims.entity';
 
 describe('ClaimsService', () => {
   let service: ClaimsService;

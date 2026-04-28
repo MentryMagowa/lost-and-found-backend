@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Claim } from './claims.entity';
-import { CreateClaimDto } from './create-claim.dto';
+import { Claim } from './entities/claims.entity';
+import { CreateClaimDto } from './dto/create-claim.dto';
+import { UpdateClaimDto } from './dto/update-claim.dto';
 
 @Injectable()
 export class ClaimsService {
@@ -48,4 +49,11 @@ return await this.claimsRepository.save(newClaim);
     claim.status = status;
     return await this.claimsRepository.save(claim);
   }
+
+  async update(id: number, updateClaimDto: UpdateClaimDto): Promise<Claim> {
+  const claim = await this.findOne(id);
+  Object.assign(claim, updateClaimDto);
+  return await this.claimsRepository.save(claim);
+}
+
 }
