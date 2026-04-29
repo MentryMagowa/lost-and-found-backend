@@ -8,5 +8,6 @@ import { LostItem } from './lost-item.entity';
   imports: [TypeOrmModule.forFeature([LostItem])],
   controllers: [LostItemsController],
   providers: [LostItemsService],
+  exports: [LostItemsService],
 })
 export class LostItemsModule {}

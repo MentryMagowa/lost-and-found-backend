@@ -5,6 +5,9 @@ import { UsersModule } from './users/users.module';
 import { LostItemsModule } from './lost-items/lost-items.module';
 import { FoundItemsModule } from './found-items/found-items.module';
 import { ClaimsModule } from './claims/claims.module';
+import { MatchesModule } from './matches/matches.module';
+import { ReportsModule } from './reports/reports.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -28,6 +31,9 @@ import { ClaimsModule } from './claims/claims.module';
     LostItemsModule,
     FoundItemsModule,
     ClaimsModule,
+    MatchesModule,
+    ReportsModule,
+    NotificationsModule,
   ],
 })
 export class AppModule {}
