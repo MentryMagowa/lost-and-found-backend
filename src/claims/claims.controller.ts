@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
 import { ClaimsService } from './claims.service';
-import { CreateClaimDto } from './create-claim.dto';
+import { CreateClaimDto } from './dto/create-claim.dto';
+import { UpdateClaimDto } from './dto/update-claim.dto';
 
 @Controller('claims')
 export class ClaimsController {
@@ -25,4 +26,11 @@ export class ClaimsController {
   findOne(@Param('id') id: string) {
     return this.claimsService.findOne(+id); 
   }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateClaimDto: UpdateClaimDto) {
+  return this.claimsService.update(+id, updateClaimDto);
+}
+
+
 }
