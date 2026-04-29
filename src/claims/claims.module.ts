@@ -8,6 +8,6 @@ import {Claim} from './entities/claims.entity';
 @Module({
   imports:[TypeOrmModule.forFeature([Claim])],
   providers: [ClaimsService],
-  controllers: [ClaimsController]
+  controllers: [ClaimsController],
 })
 export class ClaimsModule {}
