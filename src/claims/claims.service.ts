@@ -34,14 +34,14 @@ return await this.claimsRepository.save(newClaim);
   async findOne(id: number): Promise<Claim> {
     const claim = await this.claimsRepository.findOne({
       where: { id },
-      relations: ['user', 'foundItem'],
     });
+
     if (!claim) {
       throw new NotFoundException(`Claim with ID ${id} not found`);
     }
+
     return claim;
   }
-
   // Update claim status (e.g., 'approved' or 'rejected')
   async updateStatus(id: number, status: string): Promise<Claim> {
     const claim = await this.findOne(id);
