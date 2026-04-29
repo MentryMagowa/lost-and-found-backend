@@ -1,31 +1,40 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-@Entity('found-items')
+@Entity('found_items')
 export class FoundItem {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ type: 'varchar2', length: 255 })
-  title!: string;
+  @Column({ length: 255 })
+  itemName: string;
+
+  @Column({ length: 100 })
+  category: string;
 
   @Column({ type: 'clob', nullable: true })
-  description!: string;
+  description: string;
 
-  @Column({ type: 'varchar2', length: 255 })
-  location!: string;
+  @Column({ length: 255 })
+  location: string;
 
-  @Column({ type: 'date', name: 'dateFound' })
-  dateFound!: Date;
+  @Column({ type: 'date' })
+  dateFound: Date;
 
-  @Column({ type: 'varchar2', length: 50, default: 'pending' })
-  status!: string;
+  @Column({ length: 50, default: 'pending' })
+  status: string;
 
-  @Column({ type: 'varchar2', length: 500, nullable: true })
-  imageUrl!: string | null;   // 👈 explicitly allow null
+  @Column({ length: 500, nullable: true })
+  imageUrl?: string;
 
-  @CreateDateColumn({ type: 'date', name: 'createdAt' })
-  createdAt!: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @UpdateDateColumn({ type: 'date', name: 'updatedAt' })
-  updatedAt!: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

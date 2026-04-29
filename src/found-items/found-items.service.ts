@@ -12,24 +12,13 @@ export class FoundItemsService {
     private foundItemRepository: Repository<FoundItem>,
   ) {}
 
-  // Create with JSON (no file)
   async create(createDto: CreateFoundItemDto): Promise<FoundItem> {
     const item = this.foundItemRepository.create({
       ...createDto,
+      dateFound: new Date(createDto.dateFound),
       status: createDto.status || 'pending',
     });
-    return await this.foundItemRepository.save(item);
-  }
 
-  // Create with uploaded file
-  async createWithFile(createDto: CreateFoundItemDto, file: Express.Multer.File): Promise<FoundItem> {
-    const imageUrl = file ? `/uploads/found-items/${file.filename}` : undefined;
-    const item = this.foundItemRepository.create({
-      ...createDto,
-      dateFound: createDto.dateFound ? new Date(createDto.dateFound) : undefined,
-      status: createDto.status || 'pending',
-      imageUrl,
-    });
     return await this.foundItemRepository.save(item);
   }
 
@@ -37,39 +26,37 @@ export class FoundItemsService {
     return await this.foundItemRepository.find();
   }
 
-  async findOne(id: string): Promise<FoundItem> {
-    const item = await this.foundItemRepository.findOne({where:{id}});
+  async findOne(id: number): Promise<FoundItem> {
+    const item = await this.foundItemRepository.findOne({
+      where: { id },
+    });
+
     if (!item) {
       throw new NotFoundException(`Found item with ID ${id} not found`);
     }
+
     return item;
   }
 
-  async update(id: string, updateFoundDto: UpdateFoundItemDto): Promise<FoundItem> {
+  async update(id: number, updateDto: UpdateFoundItemDto): Promise<FoundItem> {
     const item = await this.findOne(id);
-    //if (updateFoundDto.dateFound) {
-      //updateFoundDto.dateFound = new Date(updateFoundDto.dateFound);
-    //}
-    Object.assign(item, updateFoundDto);
+
+    Object.assign(item, {
+      ...updateDto,
+      dateFound: updateDto.dateFound
+        ? new Date(updateDto.dateFound)
+        : item.dateFound,
+    });
+
     return await this.foundItemRepository.save(item);
   }
 
-  async updateWithFile(id: string, updateFoundDto: UpdateFoundItemDto, file: Express.Multer.File): Promise<FoundItem> {
-    const item = await this.findOne(id);
-    if (file) {
-      item.imageUrl = `/uploads/found-item/${file.filename}`;
-    }
-    //if (updateFoundDto.dateFound) {
-    //  updateFoundDto.dateFound = new Date(updateFoundDto.dateFound);
-    //}
-    Object.assign(item, updateFoundDto);
-    return await this.foundItemRepository.save(item);
-  }
+  async remove(id: number): Promise<{ message: string }> {
+    await this.findOne(id);
+    await this.foundItemRepository.delete(id);
 
-  async remove(id: number): Promise<void> {
-    const result = await this.foundItemRepository.delete(id);
-    if (result.affected === 0) {
-      throw new NotFoundException(`Found item with ID ${id} not found`);
-    }
+    return {
+      message: `Found item ${id} deleted successfully`,
+    };
   }
 }

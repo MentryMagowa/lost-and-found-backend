@@ -26,11 +26,4 @@ export class ClaimsController {
   findOne(@Param('id') id: string) {
     return this.claimsService.findOne(+id); 
   }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateClaimDto: UpdateClaimDto) {
-  return this.claimsService.update(+id, updateClaimDto);
-}
-
-
 }
