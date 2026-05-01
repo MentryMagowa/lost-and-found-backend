@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 
 @Entity('found_items')
@@ -32,9 +33,15 @@ export class FoundItem {
   @Column({ length: 500, nullable: true })
   imageUrl?: string;
 
+  @Column({ length: 255, nullable: true })
+  foundBy?: string;
+
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @DeleteDateColumn({ nullable: true })
+  deletedAt?: Date;
 }
