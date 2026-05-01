@@ -1,5 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from 'typeorm';
-//import { LostItem } from '../../lost-items/lost-item.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -18,6 +24,9 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
- // @OneToMany(() => LostItem, (lostItem) => lostItem.user)
-  //lostItems: LostItem[];
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @DeleteDateColumn({ nullable: true })
+  deletedAt?: Date;
 }
