@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from 'typeorm';
-//import { LostItem } from '../../lost-items/lost-item.entity';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
+import { LostItem } from '../../lost-items/lost-item.entity';
 
 @Entity('users')
 export class User {
@@ -18,6 +18,6 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
- // @OneToMany(() => LostItem, (lostItem) => lostItem.user)
-  //lostItems: LostItem[];
+  @OneToMany(() => LostItem, (lostItem) => lostItem.user)
+  lostItems: LostItem[];
 }

@@ -1,22 +1,47 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { User } from '../../users/entities/user.entity';
+import { FoundItem } from '../../found-items/entities/found-item.entity';
 
-@Entity({ name: 'CLAIMS' }) 
+@Entity({ name: 'CLAIMS' })
 export class Claim {
   @PrimaryGeneratedColumn({ name: 'ID' })
-  id!: number;
+  id: number;
 
   @CreateDateColumn({ name: 'CLAIM_DATE' })
-  claimDate!: Date;
+  claimDate: Date;
 
   @Column({ name: 'STATUS', default: 'pending' })
-  status!: string;
+  status: string;
 
   @Column({ name: 'VERIFICATION_NOTE', nullable: true })
-  verificationNote!: string;
+  verificationNote?: string;
 
   @Column({ name: 'USER_ID' })
-  userId!: number;
+  userId: number;
 
   @Column({ name: 'FOUND_ITEM_ID' })
-  foundItemId!: number;
+  foundItemId: number;
+
+  @UpdateDateColumn({ name: 'UPDATED_AT' })
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'DELETED_AT', nullable: true })
+  deletedAt?: Date;
+
+  @ManyToOne(() => User, (user) => user.claims)
+  @JoinColumn({ name: 'USER_ID' })
+  user: User;
+
+  @ManyToOne(() => FoundItem, (foundItem) => foundItem.claims)
+  @JoinColumn({ name: 'FOUND_ITEM_ID' })
+  foundItem: FoundItem;
 }
