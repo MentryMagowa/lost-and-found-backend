@@ -1,36 +1,54 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
     @Post()
+    @ApiOperation({ summary: 'Create a new user' })
+    @ApiResponse({ status: 201, description: 'User created successfully', type: User })
+    @ApiResponse({ status: 400, description: 'Invalid input' })
     create(@Body() createUserDto: CreateUserDto) {
         return this.usersService.create(createUserDto);
     }
 
     @Get()
+    @ApiOperation({ summary: 'Retrieve all users' })
+    @ApiResponse({ status: 200, description: 'List of users', type: [User] })
     findAll() {
         return this.usersService.findAll();
     }
 
+    @Get(':id')
+    @ApiOperation({ summary: 'Retrieve a user by ID' })
+    @ApiParam({ name: 'id', description: 'User ID', type: Number })
+    @ApiResponse({ status: 200, description: 'User found', type: User })
+    @ApiResponse({ status: 404, description: 'User not found' })
+    findOne(@Param('id') id: string) {
+        return this.usersService.findOne(+id);
+    }
+
     @Patch(':id')
+    @ApiOperation({ summary: 'Update a user' })
+    @ApiParam({ name: 'id', description: 'User ID', type: Number })
+    @ApiResponse({ status: 200, description: 'User updated successfully', type: User })
+    @ApiResponse({ status: 404, description: 'User not found' })
     update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-        // Note: +id converts the string param to a number
         return this.usersService.update(+id, updateUserDto);
     }
 
-    // ... other methods call this.usersService.xxx
-    @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.usersService.findOne(+id); // Method is now "used"
-    }
-
     @Delete(':id')
+    @ApiOperation({ summary: 'Delete a user' })
+    @ApiParam({ name: 'id', description: 'User ID', type: Number })
+    @ApiResponse({ status: 200, description: 'User deleted successfully' })
+    @ApiResponse({ status: 404, description: 'User not found' })
     remove(@Param('id') id: string) {
-        return this.usersService.remove(+id); // Method is now "used"
+        return this.usersService.remove(+id);
     }
 }
