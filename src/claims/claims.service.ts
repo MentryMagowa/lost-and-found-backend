@@ -27,28 +27,28 @@ return await this.claimsRepository.save(newClaim);
   // Get all claims (for Admin to review)
   async findAll(): Promise<Claim[]> {
     return await this.claimsRepository.find({
-    // relations: ['user', 'foundItem'], // This pulls the related data from other tables
+    //relations: ['user', 'foundItem'], // This pulls the related data from other tables
     });
   }
 
-  // Get one specific claim by ID
-  async findOne(id: number): Promise<Claim> {
-    const claim = await this.claimsRepository.findOne({
-      where: { id },
-      relations: ['user', 'foundItem'],
-    });
-    if (!claim) {
-      throw new NotFoundException(`Claim with ID ${id} not found`);
-    }
-    return claim;
-  }
+ async updateByUserId(userId: number, updateClaimDto: UpdateClaimDto) {
+  const claim = await this.claimsRepository.findOneBy({ userId });
+  if (!claim) throw new NotFoundException(`No claim found for User #${userId}`);
+
+  Object.assign(claim, updateClaimDto);
+  return await this.claimsRepository.save(claim);
+}
+
 
   // Update claim status (e.g., 'approved' or 'rejected')
-  async updateStatus(id: number, status: string): Promise<Claim> {
-    const claim = await this.findOne(id);
-    claim.status = status;
-    return await this.claimsRepository.save(claim);
-  }
+ async updateStatus(id: number, status: string): Promise<Claim> {
+  const claim = await this.claimsRepository.findOne({ where: { id } });
+  if (!claim) throw new NotFoundException(`Claim #${id} not found`);
+
+  claim.status = status;
+  return await this.claimsRepository.save(claim);
+}
+
 
  async update(id: number, updateClaimDto: UpdateClaimDto) {
   const claim = await this.claimsRepository.findOne({ where: { id } });
