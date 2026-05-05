@@ -13,6 +13,6 @@ async function bootstrap() {
     prefix: '/uploads/',
   });
 
-  await app.listen(process.env.PORT || 3008);
+  await app.listen(process.env.PORT || 3079);
 }
 bootstrap();
