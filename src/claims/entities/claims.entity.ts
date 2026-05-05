@@ -15,7 +15,7 @@ export class Claim {
   @CreateDateColumn({ name: 'CLAIM_DATE' })
   claimDate: Date;
 
-  @Column({ name: 'STATUS', default: 'pending' })
+  @Column({ name: 'STATUS', default: 'pending',})
   status: string;
 
   @Column({ name: 'VERIFICATION_NOTE', nullable: true })

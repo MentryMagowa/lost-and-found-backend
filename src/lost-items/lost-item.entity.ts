@@ -10,34 +10,34 @@ import {
 @Entity('lost_items')
 export class LostItem {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ length: 255 })
-  itemName: string;
+  itemName!: string;
 
   @Column({ type: 'clob' })
-  description: string;
+  description!: string;
 
   @Column({ length: 255 })
-  location: string;
+  location!: string;
 
-  @Column({ length: 255 })
-  dateLost: string;
+  @Column({ type: 'date' })
+  dateLost!: Date;
 
-  @Column({ length: 100 })
-  category: string;
+  @Column({ length: 100,nullable: true })
+  category!: string;
 
   @Column({ length: 50, default: 'pending' })
-  status: string;
+  status!: string;
 
   @Column({ length: 255, nullable: true })
-  reportedBy: string;
+  reportedBy!: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @DeleteDateColumn({ nullable: true })
   deletedAt?: Date;

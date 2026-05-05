@@ -10,38 +10,38 @@ import {
 @Entity('found_items')
 export class FoundItem {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
-  @Column({ length: 255 })
-  itemName: string;
+  @Column({ name: 'itemName' })
+  itemName!: string;
 
-  @Column({ length: 100 })
-  category: string;
+  @Column({ name: 'category' })
+  category!: string;
 
-  @Column({ type: 'clob', nullable: true })
-  description: string;
+  @Column({ name: 'description'})
+  description!: string;
 
-  @Column({ length: 255 })
-  location: string;
+  @Column({ name: 'location'})
+  location!: string;
 
-  @Column({ type: 'date' })
-  dateFound: Date;
+  @Column({ name: 'dateFound'})
+  dateFound!: Date;
 
-  @Column({ length: 50, default: 'pending' })
-  status: string;
+  @Column({ name: 'status',nullable: true, default: 'pending' })
+  status!: string;
 
-  @Column({ length: 500, nullable: true })
+  @Column({ name: 'imageUrl', nullable: true })
   imageUrl?: string;
 
-  @Column({ length: 255, nullable: true })
+  @Column({ name: 'foundBy', nullable: true  })
   foundBy?: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @CreateDateColumn({ name: 'createdAt' })
+  createdAt!: Date;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @UpdateDateColumn({ name: 'updatedAt' })
+  updatedAt!: Date;
 
-  @DeleteDateColumn({ nullable: true })
+  @DeleteDateColumn({ name: 'deletedAt' })
   deletedAt?: Date;
 }
