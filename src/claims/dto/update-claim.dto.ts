@@ -5,5 +5,5 @@ import { IsString, IsOptional } from 'class-validator';
 export class UpdateClaimDto extends PartialType(CreateClaimDto) {
   @IsOptional()
   @IsString()
-  override status?: string;
+  status!: string;
 }
