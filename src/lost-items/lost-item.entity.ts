@@ -3,31 +3,42 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 
 @Entity('lost_items')
 export class LostItem {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
-  @Column()
-  itemName: string;
+  @Column({ length: 255 })
+  itemName!: string;
 
-  @Column()
-  description: string;
+  @Column({ type: 'clob' })
+  description!: string;
 
-  @Column()
-  location: string;
+  @Column({ length: 255 })
+  location!: string;
 
-  @Column()
-  dateLost: string;
+  @Column({ type: 'date' })
+  dateLost!: Date;
 
-  @Column({ default: 'pending' })
-  status: string;
+  @Column({ length: 100,nullable: true })
+  category!: string;
 
-  @Column({ nullable: true })
-  reportedBy: string;
+  @Column({ length: 50, default: 'pending' })
+  status!: string;
+
+  @Column({ length: 255, nullable: true })
+  reportedBy!: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
+
+  @DeleteDateColumn({ nullable: true })
+  deletedAt?: Date;
 }

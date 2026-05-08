@@ -8,6 +8,7 @@ import { ClaimsModule } from './claims/claims.module';
 import { MatchesModule } from './matches/matches.module';
 import { ReportsModule } from './reports/reports.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { NotificationsModule } from './notifications/notifications.module';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         serviceName: config.get('DB_SERVICE_NAME'),
-        synchronize: config.get('DB_SYNCHRONIZE') === 'true',
+        synchronize: config.get('DB_SYNCHRONIZE') === 'false' ? false : true,
         autoLoadEntities: true,
         logging: true,
       }),
@@ -34,6 +35,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     MatchesModule,
     ReportsModule,
     NotificationsModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

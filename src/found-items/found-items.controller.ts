@@ -16,7 +16,7 @@ import { FoundItemsService } from './found-items.service';
 import { CreateFoundItemDto } from './dto/create-found-item.dto';
 import { UpdateFoundItemDto } from './dto/update-found-item.dto';
 
-@Controller('found-items')
+@Controller('found_items')
 export class FoundItemsController {
   constructor(private readonly foundItemsService: FoundItemsService) {}
 
