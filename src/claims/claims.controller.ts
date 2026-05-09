@@ -17,13 +17,28 @@ export class ClaimsController {
     return this.claimsService.findAll();
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateClaimDto: UpdateClaimDto) {
-     return this.claimsService.update(+id, updateClaimDto);
+ @Get('user/:userId')
+findOneByUserId(@Param('userId') userId: string) {
+  return this.claimsService.updateByUserId(+userId, {}); 
+}
+
+@Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.claimsService.findOne(+id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.claimsService.findOne(+id); 
+
+ @Patch('user/:userId') // Changing the route to be specific
+updateByUserId(
+  @Param('userId') userId: string, 
+  @Body() updateClaimDto: UpdateClaimDto
+) {
+  return this.claimsService.updateByUserId(+userId, updateClaimDto);
+}
+
+ @Patch(':id')
+  update(@Param('id') id: string, @Body() updateClaimDto: UpdateClaimDto) {
+    return this.claimsService.update(+id, updateClaimDto);
   }
+
 }
