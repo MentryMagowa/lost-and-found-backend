@@ -22,6 +22,11 @@ findOneByUserId(@Param('userId') userId: string) {
   return this.claimsService.updateByUserId(+userId, {}); 
 }
 
+@Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.claimsService.findOne(+id);
+  }
+
 
  @Patch('user/:userId') // Changing the route to be specific
 updateByUserId(
@@ -31,6 +36,9 @@ updateByUserId(
   return this.claimsService.updateByUserId(+userId, updateClaimDto);
 }
 
-
+ @Patch(':id')
+  update(@Param('id') id: string, @Body() updateClaimDto: UpdateClaimDto) {
+    return this.claimsService.update(+id, updateClaimDto);
+  }
 
 }
