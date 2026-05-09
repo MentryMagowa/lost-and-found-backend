@@ -1,5 +1,5 @@
-import { IsString, IsNotEmpty, IsDateString, IsEnum, IsNumber, IsOptional } from 'class-validator';
-
+import { IsString, IsNotEmpty, IsDate, IsEnum, IsNumber, IsOptional } from 'class-validator';
+import {Type} from 'class-transformer';
 export class CreateLostItemDto {
   @IsString()
   @IsNotEmpty()
@@ -13,15 +13,16 @@ export class CreateLostItemDto {
   @IsNotEmpty()
   location: string;
 
-  @IsDateString()
+  @IsDate()
   @IsNotEmpty()
-  dateLost: string;
+  @Type(() => Date)
+  dateLost: Date;
 
   @IsString()
   @IsNotEmpty()
   category: string;
 
-  @IsEnum(['lost', 'recovered'])
+  // @IsEnum(['lost', 'recovered'])
   @IsOptional()
   status?: string;
 
