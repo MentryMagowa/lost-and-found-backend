@@ -11,5 +11,5 @@ export class ClaimResponseDto {
   updatedAt!: Date;
 
   @Exclude()
-  deletedAt?: Date;
+  deletedAt!: Date;
 }
