@@ -25,7 +25,7 @@ export class UpdateLostItemDto {
   @IsOptional()
   status?: string;
 
-  @IsNumber()
+  @IsString()
   @IsOptional()
-  reportedById?: number;
+  reportedBy?: string;
 }

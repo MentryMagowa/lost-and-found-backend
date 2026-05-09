@@ -25,7 +25,7 @@ export class CreateLostItemDto {
   @IsOptional()
   status?: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  reportedById: number;
+  reportedBy: string;
 }

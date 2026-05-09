@@ -38,7 +38,9 @@ export class FoundItemsController {
     @Body() createFoundItemDto: CreateFoundItemDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    const imageUrl = file ? `/uploads/found-items/${file.filename}` : undefined;
+    const imageUrl = file
+      ? `/uploads/found-items/${file.filename}`
+      : undefined;
 
     return this.foundItemsService.create({
       ...createFoundItemDto,
@@ -53,7 +55,7 @@ export class FoundItemsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.foundItemsService.findOne(id);
+    return this.foundItemsService.findOne(+id);
   }
 
   @Patch(':id')
@@ -61,7 +63,7 @@ export class FoundItemsController {
     @Param('id') id: string,
     @Body() updateFoundItemDto: UpdateFoundItemDto,
   ) {
-    return this.foundItemsService.update(id, updateFoundItemDto);
+    return this.foundItemsService.update(+id, updateFoundItemDto);
   }
 
   @Delete(':id')

@@ -1,25 +1,17 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity('users')
-export class User {
+/**
+ * Base entity class that provides common fields for all entities
+ * Includes audit trail fields (createdAt, updatedAt, deletedAt)
+ */
+export class BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column({ length: 255 })
-  name: string;
-
-  @Column({ unique: true, length: 255 })
-  email: string;
-
-  @Column({ length: 50, default: 'student' })
-  role: string;
 
   @CreateDateColumn()
   createdAt: Date;

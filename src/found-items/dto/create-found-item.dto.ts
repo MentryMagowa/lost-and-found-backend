@@ -1,27 +1,31 @@
-import { IsString, IsNotEmpty, IsOptional, IsDateString, IsUrl } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateFoundItemDto {
   @IsString()
   @IsNotEmpty()
-  title!: string;
-
-  @IsString()
-  @IsOptional()
-  description?: string;
+  itemName: string;
 
   @IsString()
   @IsNotEmpty()
-  location!: string;
+  category: string;
 
-  @IsDateString()
+  @IsString()
   @IsNotEmpty()
-  dateFound!: string;
+  description: string;
+
+  @IsString()
+  @IsNotEmpty()
+  location: string;
+
+  @IsString()
+  @IsNotEmpty()
+  dateFound: string;
 
   @IsString()
   @IsOptional()
   status?: string;
 
-  @IsUrl()
+  @IsString()
   @IsOptional()
   imageUrl?: string;
 }
