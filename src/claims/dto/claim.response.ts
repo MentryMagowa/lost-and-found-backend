@@ -6,7 +6,7 @@ export class ClaimResponseDto {
   userId!: number;
   status!: string;
   claimDate!: Date;
-  description!: string;
+  description?: string;
   createdAt!: Date;
   updatedAt!: Date;
 
